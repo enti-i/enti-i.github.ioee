@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enti Office &mdash; Free Online Office Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="#hero" aria-label="Enti Office home">Enti Office</a>
+      <nav class="site-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
+          <span class="visually-hidden">Toggle navigation</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <ul class="nav-list" id="primary-menu">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#entiword">EntiWord</a></li>
+          <li><a href="#entipoint">EntiPoint</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <a class="cta-button" href="#early-access">Join the free beta</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container hero__container">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Kostenlos. Sicher. Gemeinsam.</p>
+          <h1>Enti Office ist die kostenlose Online-Alternative zu Microsoft 365.</h1>
+          <p class="hero__description">
+            Schreibe beeindruckende Dokumente, präsentiere Ideen mit Stil und arbeite in Echtzeit mit deinem Team. Alles im
+            Browser, alles ohne Lizenzkosten.
+          </p>
+          <div class="hero__actions">
+            <a class="cta-button" href="#early-access">Beta jetzt sichern</a>
+            <a class="ghost-button" href="#features">Mehr erfahren</a>
+          </div>
+          <dl class="hero__stats">
+            <div>
+              <dt>0€</dt>
+              <dd>für alle Kernfunktionen</dd>
+            </div>
+            <div>
+              <dt>Cloud-first</dt>
+              <dd>Keine Installationen, keine Updates</dd>
+            </div>
+            <div>
+              <dt>Team-ready</dt>
+              <dd>Freigaben &amp; Co-Authoring inklusive</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="hero__media" aria-hidden="true">
+          <div class="hero-screenshot">
+            <div class="hero-screenshot__toolbar">
+              <span class="hero-screenshot__dot"></span>
+              <span class="hero-screenshot__dot"></span>
+              <span class="hero-screenshot__dot"></span>
+              <p>Enti Office Workspace</p>
+            </div>
+            <div class="hero-screenshot__body">
+              <div class="hero-screenshot__column">
+                <h3>Team Favoriten</h3>
+                <ul>
+                  <li>EntiWord &mdash; Marketing Plan</li>
+                  <li>EntiPoint &mdash; Q3 Kick-off</li>
+                  <li>EntiWord &mdash; Vertragsentwurf</li>
+                  <li>EntiPoint &mdash; Produktdemo</li>
+                </ul>
+              </div>
+              <div class="hero-screenshot__column">
+                <h3>Live Aktivitäten</h3>
+                <ul>
+                  <li><span>Lisa</span> bearbeitet <strong>Brand Story</strong></li>
+                  <li><span>Noah</span> präsentiert <strong>Weekly Update</strong></li>
+                  <li><span>Sara</span> kommentiert <strong>Vertragsentwurf</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-grid" id="features">
+      <div class="container">
+        <h2>Alles drin, was moderne Teams erwarten.</h2>
+        <p class="section-intro">Enti Office kombiniert die wichtigsten Office-Apps in einer offenen, DSGVO-konformen Plattform.</p>
+        <div class="grid">
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">📝</div>
+            <h3>Intelligente Inhalte</h3>
+            <p>Nutze KI-Vorschläge, Vorlagenbibliotheken und Versionskontrolle direkt im Dokument.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">🤝</div>
+            <h3>Echtzeit-Zusammenarbeit</h3>
+            <p>Arbeite zeitgleich mit Kolleg:innen, sieh Cursors, Kommentare und Aufgaben live.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">🔐</div>
+            <h3>Europäische Sicherheit</h3>
+            <p>Verschlüsselte Speicherung in der EU, feingranulare Freigaben und Audit-Logs.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">⚙️</div>
+            <h3>Offene Integrationen</h3>
+            <p>Verbinde Enti Office mit Drive, Slack, Jira oder deinen eigenen APIs per Webhooks.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="product" id="entiword">
+      <div class="container product__container">
+        <div class="product__media" aria-hidden="true">
+          <img src="https://dummyimage.com/640x420/111827/ffffff&text=EntiWord" alt="" />
+        </div>
+        <div class="product__content">
+          <span class="pill">Neu</span>
+          <h2>EntiWord &mdash; Dokumente, die begeistern.</h2>
+          <p>EntiWord kombiniert einen aufgeräumten Editor mit leistungsstarken Schreibwerkzeugen. Von Brainstorming bis
+            Vertragswerk &ndash; alles passiert gemeinsam im Browser.</p>
+          <ul class="product__features">
+            <li>AI-Schreibassistent: Formuliere, fasse zusammen und übersetze mit einem Klick.</li>
+            <li>Serienbriefe und Vorlagenverwaltung für wiederkehrende Prozesse.</li>
+            <li>Kommentieren, Aufgaben zuweisen und Genehmigungs-Workflows abbilden.</li>
+          </ul>
+          <div class="product__actions">
+            <a class="cta-button" href="#early-access">EntiWord testen</a>
+            <a class="ghost-button" href="#faq">Funktionsübersicht</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product product--reverse" id="entipoint">
+      <div class="container product__container">
+        <div class="product__content">
+          <span class="pill pill--purple">Coming Soon</span>
+          <h2>EntiPoint &mdash; Präsentationen ohne Grenzen.</h2>
+          <p>Erstelle visuelle Storys, die überzeugen. EntiPoint bietet Layouts, Animationen und Live-Präsentationen im Browser &ndash;
+            egal ob Meetingraum oder Livestream.</p>
+          <ul class="product__features">
+            <li>Designer-Vorlagen mit Drag-and-Drop &amp; automatischer Ausrichtung.</li>
+            <li>Live-Präsentation mit geteilten Sprecher-Notizen und Moderator:innen-Chat.</li>
+            <li>Veröffentliche Slides als interaktive Webseiten und sammle Feedback.</li>
+          </ul>
+          <div class="product__actions">
+            <a class="cta-button" href="#early-access">Als Erste:r präsentieren</a>
+            <a class="ghost-button" href="#roadmap">Roadmap ansehen</a>
+          </div>
+        </div>
+        <div class="product__media" aria-hidden="true">
+          <img src="https://dummyimage.com/640x420/1d1b4b/ffffff&text=EntiPoint" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="collaboration" aria-labelledby="collaboration-title">
+      <div class="container collaboration__container">
+        <div class="collaboration__content">
+          <h2 id="collaboration-title">Gemeinsam schneller, sogar remote.</h2>
+          <p>Enti Office bündelt Kommunikation, Dateien und Aufgaben. Kommentiere direkt im Dokument, starte einen Call aus der
+            Präsentation oder teile Vorlagen mit dem gesamten Unternehmen.</p>
+          <ul class="collaboration__list">
+            <li><strong>Live-Cursor</strong> zeigen sofort, woran Kolleg:innen arbeiten.</li>
+            <li><strong>Teilen nach Rollen</strong> sorgt für Sicherheit in allen Abteilungen.</li>
+            <li><strong>Unbegrenzte Gäste</strong> für Kund:innen, Freelancer &amp; Partner.</li>
+          </ul>
+        </div>
+        <div class="collaboration__panel" role="presentation">
+          <div class="collaboration__card">
+            <h3>Workflow Snapshot</h3>
+            <ul>
+              <li>🔁 Freigabe &ldquo;Marketing&rdquo; aktualisiert</li>
+              <li>💬 4 neue Kommentare in &ldquo;Launch Plan&rdquo;</li>
+              <li>📤 Folien &ldquo;Kick-off&rdquo; mit Gästen geteilt</li>
+              <li>✅ Vertragsentwurf von Legal genehmigt</li>
+            </ul>
+          </div>
+          <div class="collaboration__card">
+            <h3>Integrationen</h3>
+            <p>Verbinde deine Lieblings-Tools und triggere Automationen.</p>
+            <div class="integration-grid" aria-hidden="true">
+              <span>Slack</span>
+              <span>Drive</span>
+              <span>Notion</span>
+              <span>HubSpot</span>
+              <span>Zapier</span>
+              <span>Teams</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="roadmap" id="roadmap">
+      <div class="container">
+        <h2>Die Enti Office Roadmap</h2>
+        <p class="section-intro">Wir liefern jeden Monat neue Funktionen. Stimme in der Community über die nächsten Meilensteine ab.</p>
+        <ol class="roadmap__list">
+          <li>
+            <span class="roadmap__badge">Jetzt</span>
+            <div>
+              <h3>Offene Beta von EntiWord</h3>
+              <p>Stabiler Editor, Kommentar-Workflow und PDF-Export stehen bereit.</p>
+            </div>
+          </li>
+          <li>
+            <span class="roadmap__badge">Q2</span>
+            <div>
+              <h3>EntiPoint Early Access</h3>
+              <p>Testet den neuen Präsentationsmodus mit Live-Reaktionen und Sprecher-Konsole.</p>
+            </div>
+          </li>
+          <li>
+            <span class="roadmap__badge">Q3</span>
+            <div>
+              <h3>EntiMail &amp; Drive</h3>
+              <p>Eine integrierte Inbox plus 1 TB Cloud-Speicher für jedes Teammitglied.</p>
+            </div>
+          </li>
+          <li>
+            <span class="roadmap__badge">Community Vote</span>
+            <div>
+              <h3>Was sollen wir als Nächstes bauen?</h3>
+              <p>Stimme für EntiSheets, EntiMeet oder weitere Integrationen ab.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="container">
+        <h2>Häufige Fragen</h2>
+        <div class="faq__grid">
+          <article class="faq__item">
+            <h3>Ist Enti Office wirklich kostenlos?</h3>
+            <p>Ja. Die Kernfunktionen von EntiWord und EntiPoint bleiben dauerhaft kostenlos. Später folgen optionale
+              Unternehmenspakete mit erweitertem Support.</p>
+          </article>
+          <article class="faq__item">
+            <h3>Wo werden meine Daten gespeichert?</h3>
+            <p>Alle Daten liegen verschlüsselt in zertifizierten EU-Rechenzentren. Du kannst jederzeit einen Datenexport als ZIP
+              anfordern.</p>
+          </article>
+          <article class="faq__item">
+            <h3>Gibt es eine Offline-Funktion?</h3>
+            <p>Eine Progressive-Web-App mit Offline-Sync befindet sich in Entwicklung. Beta-Tester erhalten früheren Zugang.</p>
+          </article>
+          <article class="faq__item">
+            <h3>Wie kann ich Feedback geben?</h3>
+            <p>Tritt unserer Community bei und teile Feature-Wünsche. Wir veröffentlichen monatliche Updates mit allen
+              Roadmap-Entscheidungen.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="early-access" id="early-access">
+      <div class="container early-access__container">
+        <div class="early-access__content">
+          <h2>Starte heute mit Enti Office.</h2>
+          <p>Trage dich ein und erhalte Zugang zur Beta, Templates für EntiWord sowie die ersten Einblicke in EntiPoint.</p>
+          <ul>
+            <li>Sofortiger Zugang zu EntiWord Beta</li>
+            <li>Monatliche Produkt-News</li>
+            <li>Einladung zu Community-Livestreams</li>
+          </ul>
+        </div>
+        <form class="early-access__form" aria-label="Early access form">
+          <div class="form-row">
+            <label for="access-name">Name</label>
+            <input type="text" id="access-name" name="name" placeholder="Vor- und Nachname" required />
+          </div>
+          <div class="form-row">
+            <label for="access-email">E-Mail</label>
+            <input type="email" id="access-email" name="email" placeholder="du@example.com" required />
+          </div>
+          <div class="form-row">
+            <label for="access-team">Teamgröße</label>
+            <select id="access-team" name="team">
+              <option value="1-5">1-5 Personen</option>
+              <option value="6-20">6-20 Personen</option>
+              <option value="21-100">21-100 Personen</option>
+              <option value="100+">100+ Personen</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="access-notes">Was möchtet ihr bauen?</label>
+            <textarea id="access-notes" name="notes" rows="3" placeholder="Kurze Beschreibung eures Projekts"></textarea>
+          </div>
+          <button type="submit" class="cta-button">Einladung anfordern</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer__container">
+      <div>
+        <a class="logo" href="#hero">Enti Office</a>
+        <p>Die kostenlose, europäische Office-Suite für Teams jeder Größe.</p>
+      </div>
+      <div class="footer__links">
+        <div>
+          <h4>Produkte</h4>
+          <ul>
+            <li><a href="#entiword">EntiWord</a></li>
+            <li><a href="#entipoint">EntiPoint</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Ressourcen</h4>
+          <ul>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#early-access">Beta beitreten</a></li>
+            <li><a href="mailto:hello@enti-office.com">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Community</h4>
+          <ul>
+            <li><a href="#roadmap">Feature Voting</a></li>
+            <li><a href="#early-access">Livestreams</a></li>
+            <li><a href="#">Open Source</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer__legal">&copy; <span id="year"></span> Enti Office. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
