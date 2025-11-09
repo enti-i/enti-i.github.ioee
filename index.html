@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enti Office &mdash; The Online Office Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">Enti Office</div>
+      <nav class="site-nav" aria-label="Main navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu">
+          <span class="visually-hidden">Menu</span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+          <span class="nav-toggle__bar"></span>
+        </button>
+        <ul id="primary-menu" class="nav-list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#suite">Suite</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#testimonials">Stories</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="cta-button" href="#pricing">Start free trial</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Anywhere, anytime productivity</p>
+          <h1>Enti Office brings your team together in a single online workspace.</h1>
+          <p class="hero__description">Create, collaborate, and present your ideas without leaving the browser. Enti Office combines docs, spreadsheets, meetings, and tasks in one secure hub.</p>
+          <div class="hero__actions">
+            <a class="cta-button" href="#pricing">Get started</a>
+            <a class="ghost-button" href="#suite">Explore tools</a>
+          </div>
+        </div>
+        <div class="hero__media" role="presentation">
+          <div class="hero-card">
+            <div class="hero-card__header">
+              <span class="hero-avatar" aria-hidden="true">EA</span>
+              <div>
+                <p class="hero-card__title">Weekly planning</p>
+                <p class="hero-card__subtitle">Team Meeting &middot; Today 10:00</p>
+              </div>
+              <span class="hero-status">Live</span>
+            </div>
+            <div class="hero-card__body">
+              <ul class="hero-tasks">
+                <li>
+                  <span class="task-indicator task-indicator--done" aria-hidden="true"></span>
+                  <span>Review roadmap updates</span>
+                </li>
+                <li>
+                  <span class="task-indicator" aria-hidden="true"></span>
+                  <span>Assign sprint tasks</span>
+                </li>
+                <li>
+                  <span class="task-indicator task-indicator--blocked" aria-hidden="true"></span>
+                  <span>Resolve support queue</span>
+                </li>
+              </ul>
+            </div>
+            <div class="hero-card__footer">
+              <img src="https://dummyimage.com/48x48/4f46e5/ffffff&text=AL" alt="Avatar of Alex Li" />
+              <img src="https://dummyimage.com/48x48/0891b2/ffffff&text=MR" alt="Avatar of Maya Rodriguez" />
+              <img src="https://dummyimage.com/48x48/f97316/ffffff&text=JT" alt="Avatar of Jamie Tran" />
+              <button class="join-button" type="button">Join call</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-grid" id="features">
+      <div class="container">
+        <h2>Everything your team needs to work smarter.</h2>
+        <p class="section-intro">Enti Office keeps projects organized across teams and time zones. Automate busy work and focus on strategic impact.</p>
+        <div class="grid">
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">⚡</div>
+            <h3>Lightning collaboration</h3>
+            <p>Edit docs together, leave inline comments, and instantly see changes with live cursors.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">🔒</div>
+            <h3>Enterprise-grade security</h3>
+            <p>Manage roles, audit trails, and compliance policies across regions from a single console.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">📊</div>
+            <h3>Data-driven decisions</h3>
+            <p>Connect spreadsheets to your data warehouse and visualize results in real-time dashboards.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon" aria-hidden="true">🤝</div>
+            <h3>Deep integrations</h3>
+            <p>Sync with CRM, HR, and support platforms so updates flow automatically to your workspace.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="suite" id="suite">
+      <div class="container">
+        <div class="suite__intro">
+          <h2>One login, four powerful apps</h2>
+          <p>From the first idea to the final presentation, Enti Office keeps everything connected. Pick the tools you need&mdash;or use them all together.</p>
+        </div>
+        <div class="suite__apps">
+          <article class="app-card">
+            <h3>Enti Docs</h3>
+            <p>Compose beautiful documents with AI-powered writing assistance, templates, and approval workflows.</p>
+            <ul>
+              <li>Real-time co-authoring</li>
+              <li>Smart version history</li>
+              <li>Automated approvals</li>
+            </ul>
+          </article>
+          <article class="app-card">
+            <h3>Enti Sheets</h3>
+            <p>Analyze data with dynamic formulas, pivot insights, and built-in connectors to your favorite databases.</p>
+            <ul>
+              <li>Live data sync</li>
+              <li>Adaptive charts</li>
+              <li>Scenario modelling</li>
+            </ul>
+          </article>
+          <article class="app-card">
+            <h3>Enti Meet</h3>
+            <p>Host meetings with collaborative agendas, interactive polls, and instant recordings.</p>
+            <ul>
+              <li>AI highlights</li>
+              <li>Live whiteboarding</li>
+              <li>Breakout rooms</li>
+            </ul>
+          </article>
+          <article class="app-card">
+            <h3>Enti Tasks</h3>
+            <p>Coordinate work with boards, timeline views, and cross-team automations that keep projects on track.</p>
+            <ul>
+              <li>Flexible workflows</li>
+              <li>Automated reminders</li>
+              <li>Cross-project dashboards</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="showcase" aria-labelledby="showcase-title">
+      <div class="container">
+        <div class="showcase__content">
+          <h2 id="showcase-title">Designed for hybrid teams</h2>
+          <p>Whether your team is fully remote or gathered around a conference table, Enti Office adapts. Share agendas before meetings, co-edit notes in real time, and capture action items that sync across every project.</p>
+          <div class="showcase__stats">
+            <div>
+              <span class="stat-number">98%</span>
+              <span class="stat-label">Customer satisfaction</span>
+            </div>
+            <div>
+              <span class="stat-number">2.5x</span>
+              <span class="stat-label">Faster project delivery</span>
+            </div>
+            <div>
+              <span class="stat-number">40+</span>
+              <span class="stat-label">Global integrations</span>
+            </div>
+          </div>
+        </div>
+        <div class="showcase__media" role="presentation">
+          <img src="https://dummyimage.com/640x420/1e293b/ffffff&text=Hybrid+Workspace" alt="Illustration of a hybrid team collaborating online" />
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <h2>Simple pricing for teams of any size</h2>
+        <p class="section-intro">Start free, then pick the plan that fits your team's needs. Switch or cancel anytime.</p>
+        <div class="pricing__plans">
+          <article class="pricing-card">
+            <h3>Starter</h3>
+            <p class="pricing-card__price">Free</p>
+            <p class="pricing-card__description">Perfect for individuals exploring modern collaboration.</p>
+            <ul>
+              <li>Up to 3 collaborators</li>
+              <li>Docs &amp; Sheets included</li>
+              <li>2 GB encrypted storage</li>
+            </ul>
+            <a class="ghost-button" href="#contact">Create free account</a>
+          </article>
+          <article class="pricing-card pricing-card--highlight">
+            <h3>Team</h3>
+            <p class="pricing-card__price">$12<span>/user</span></p>
+            <p class="pricing-card__description">All-in-one suite for fast-moving startups and growing teams.</p>
+            <ul>
+              <li>Unlimited collaborators</li>
+              <li>Advanced meeting tools</li>
+              <li>Shared automations</li>
+            </ul>
+            <a class="cta-button" href="#contact">Start 30-day trial</a>
+          </article>
+          <article class="pricing-card">
+            <h3>Enterprise</h3>
+            <p class="pricing-card__price">Let’s talk</p>
+            <p class="pricing-card__description">Dedicated support for regulated industries and global rollouts.</p>
+            <ul>
+              <li>Custom security controls</li>
+              <li>Unlimited storage</li>
+              <li>24/7 success manager</li>
+            </ul>
+            <a class="ghost-button" href="#contact">Contact sales</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+      <div class="container">
+        <h2>Loved by teams that never stop moving</h2>
+        <div class="testimonial-grid">
+          <figure class="testimonial">
+            <blockquote>
+              “Enti Office replaced three different tools for our distributed team. Our product cycles are quicker and meetings actually stay on track.”
+            </blockquote>
+            <figcaption>
+              <span class="testimonial__name">Jordan Avery</span>
+              <span class="testimonial__role">Head of Product, Orbital Labs</span>
+            </figcaption>
+          </figure>
+          <figure class="testimonial">
+            <blockquote>
+              “The Sheets connectors save us hours every week. Leadership can finally trust the dashboards because they’re always up to date.”
+            </blockquote>
+            <figcaption>
+              <span class="testimonial__name">Priya Desai</span>
+              <span class="testimonial__role">Data Lead, Northwind Logistics</span>
+            </figcaption>
+          </figure>
+          <figure class="testimonial">
+            <blockquote>
+              “Security reviews used to take months. Enti Office made it easy to deploy across regions without compromising compliance.”
+            </blockquote>
+            <figcaption>
+              <span class="testimonial__name">Louis García</span>
+              <span class="testimonial__role">CIO, Meridian Financial</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="container contact__container">
+        <div class="contact__content">
+          <h2>Ready to move work forward?</h2>
+          <p>Tell us about your team and we’ll help you design the perfect workspace. You’ll hear from us within one business day.</p>
+          <ul class="contact__list">
+            <li><strong>Email:</strong> hello@enti-office.com</li>
+            <li><strong>Phone:</strong> +49 30 1234 5678</li>
+            <li><strong>Address:</strong> Leipziger Platz 10, 10117 Berlin, Germany</li>
+          </ul>
+        </div>
+        <form class="contact-form" aria-label="Contact form">
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required />
+          </div>
+          <div class="form-row">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Company name" />
+          </div>
+          <div class="form-row">
+            <label for="message">How can we help?</label>
+            <textarea id="message" name="message" rows="4" placeholder="Tell us about your team" required></textarea>
+          </div>
+          <button type="submit" class="cta-button">Request demo</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer__container">
+      <div>
+        <div class="logo">Enti Office</div>
+        <p>Modern collaboration for teams everywhere.</p>
+      </div>
+      <div class="footer__links">
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#suite">Apps</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#testimonials">Customer stories</a></li>
+            <li><a href="#">Help center</a></li>
+            <li><a href="#">Developers</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer__legal">&copy; <span id="year"></span> Enti Office. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
