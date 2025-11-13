@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Let's Start &ndash; EntiQuiz Host</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="host">
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="/">EntiQuiz</a>
+        <nav>
+          <ul class="inline-links">
+            <li><a href="/LetsStart/" aria-current="page">Let's Start</a></li>
+            <li><a href="/quiz/">Quiz-Builder</a></li>
+            <li><a href="/">Zur&uuml;ck zur &Uuml;bersicht</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container host">
+        <div class="section__intro">
+          <p class="eyebrow">Let's Start</p>
+          <h1>Kahoot-Feeling ohne Internetpflicht.</h1>
+          <p>W&auml;hle ein gespeichertes Quiz aus, zeig die richtigen Antworten an und verteile automatisch Punkte an die schnellsten Teams.</p>
+        </div>
+
+        <section class="panel" aria-label="Quiz-Auswahl">
+          <div class="host__select">
+            <label>
+              Verf&uuml;gbare Quizze
+              <select data-quiz-select>
+                <option value="">Bitte w&auml;hlen</option>
+              </select>
+            </label>
+            <button class="button button--primary" type="button" data-host-start>Session starten</button>
+          </div>
+          <p class="muted">Quiz fehlt? Erstelle eines im <a href="/quiz/">Quiz-Builder</a>.</p>
+        </section>
+
+        <section class="panel host__board" aria-label="Session Board">
+          <div class="host__question">
+            <header>
+              <p class="eyebrow">Frage <span data-question-index>0</span>/<span data-question-total>0</span></p>
+              <h2 data-question-text>Bitte w&auml;hle zuerst ein Quiz aus.</h2>
+              <p class="muted" data-question-desc></p>
+            </header>
+            <ol class="answer-list" data-answer-list></ol>
+            <div class="host__controls">
+              <button class="button button--ghost" type="button" data-prev disabled>Zur&uuml;ck</button>
+              <button class="button button--ghost" type="button" data-reveal-answer disabled>Antwort anzeigen</button>
+              <button class="button button--primary" type="button" data-next disabled>Weiter</button>
+            </div>
+          </div>
+
+          <div class="host__sidebar">
+            <section>
+              <h3>Timer</h3>
+              <p class="timer" data-timer>0s</p>
+              <div class="timer__actions">
+                <button class="button button--ghost" type="button" data-timer-start disabled>Start</button>
+                <button class="button button--ghost" type="button" data-timer-reset disabled>Reset</button>
+              </div>
+            </section>
+
+            <section>
+              <h3>Spieler:innen</h3>
+              <form class="form" data-player-form>
+                <label>
+                  Name
+                  <input type="text" name="player" placeholder="z. B. Team Blau" />
+                </label>
+                <button class="button button--ghost" type="submit">Hinzuf&uuml;gen</button>
+              </form>
+              <ul class="scoreboard" data-score-list></ul>
+            </section>
+
+            <section>
+              <h3>Kahoot-Style Punkte</h3>
+              <form class="form podium-form" data-podium-form>
+                <p class="muted">Lege fest, wer zuerst richtig lag. EntiQuiz verteilt automatisch 1000/700/500 Punkte.</p>
+                <label>
+                  1. Platz (+1000)
+                  <select name="first" data-podium-select>
+                    <option value="">---</option>
+                  </select>
+                </label>
+                <label>
+                  2. Platz (+700)
+                  <select name="second" data-podium-select>
+                    <option value="">---</option>
+                  </select>
+                </label>
+                <label>
+                  3. Platz (+500)
+                  <select name="third" data-podium-select>
+                    <option value="">---</option>
+                  </select>
+                </label>
+                <div class="podium-actions">
+                  <button class="button button--primary" type="submit" data-award-round>Runde abschlie&szlig;en</button>
+                  <button class="button button--ghost" type="button" data-reset-podium>Leeren</button>
+                </div>
+              </form>
+              <ul class="round-history" data-round-history></ul>
+            </section>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; <span data-year></span> EntiQuiz.</p>
+      </div>
+    </footer>
+
+    <div class="cookie-banner" data-cookie-banner>
+      <div class="cookie-banner__inner">
+        <p>Wir verwenden Local Storage nur, wenn du zustimmst. So bleiben Quizze auch offline verf&uuml;gbar.</p>
+        <div class="cookie-banner__actions">
+          <button class="button button--ghost" type="button" data-cookie-decline>Nur technisch notwendige</button>
+          <button class="button button--primary" type="button" data-cookie-accept>Einverstanden</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/main.js" defer></script>
+  </body>
+</html>

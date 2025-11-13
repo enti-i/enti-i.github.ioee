@@ -3,407 +3,124 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enti Office &mdash; EntiWord &amp; EntiPoint direkt im Browser</title>
+    <title>EntiQuiz &ndash; Dein Kahoot fürs lokale WLAN</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body>
-    <header class="top-bar">
-      <div class="container top-bar__inner">
-        <a class="brand" href="#hero">Enti Office</a>
-        <nav class="main-nav" aria-label="Hauptnavigation">
-          <button class="main-nav__toggle" aria-expanded="false" aria-controls="primary-nav">
-            <span class="visually-hidden">Navigation umschalten</span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <ul class="main-nav__list" id="primary-nav">
-            <li><a href="#suite">Suite</a></li>
-            <li><a href="#workspace">Workspace</a></li>
-            <li><a href="#collaboration">Zusammenarbeit</a></li>
-            <li><a href="#pricing">Preise</a></li>
-            <li><a href="#support">Support</a></li>
+  <body data-page="home">
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="/">EntiQuiz</a>
+        <nav>
+          <ul class="inline-links">
+            <li><a href="/LetsStart/">Let's Start</a></li>
+            <li><a href="/quiz/">Quiz-Builder</a></li>
+            <li><a href="#funktionen">Funktionen</a></li>
           </ul>
         </nav>
-        <a class="button button--primary" href="#beta">Kostenlos starten</a>
       </div>
     </header>
 
     <main>
-      <section class="hero" id="hero">
-        <div class="container hero__inner">
-          <div class="hero__content">
-            <span class="hero__tag">Kostenlose Office Suite</span>
-            <h1>Enti Office ist deine Alternative zu Microsoft 365.</h1>
+      <section class="hero">
+        <div class="container hero__grid">
+          <div>
+            <p class="eyebrow">Orange-Yellow Power</p>
+            <h1>EntiQuiz bringt das Kahoot-Gef&uuml;hl in dein lokales WLAN.</h1>
             <p>
-              Schreibe Texte in EntiWord, entwerfe Präsentationen mit EntiPoint und arbeite mit deinem Team in Echtzeit. Keine
-              Lizenzen. Keine Installation. Einfach Browser öffnen und loslegen.
+              Bau komplette Sessions, speichere sie offline und starte sie sofort &ndash; ganz ohne Cloud oder Login.
+              EntiQuiz speichert alles im Browser und gibt dir Werkzeuge zum Live-Moderieren, Punkte vergeben und Antworten anzeigen.
             </p>
             <div class="hero__actions">
-              <a class="button button--primary" href="#workspace">Jetzt ausprobieren</a>
-              <a class="button button--ghost" href="#suite">Mehr erfahren</a>
+              <a class="button button--primary" href="/quiz/">Quiz erstellen</a>
+              <a class="button button--ghost" href="/LetsStart/">Session starten</a>
             </div>
-            <dl class="hero__stats">
-              <div>
-                <dt>0 €</dt>
-                <dd>für EntiWord &amp; EntiPoint</dd>
-              </div>
-              <div>
-                <dt>Unbegrenzt</dt>
-                <dd>Teammitglieder &amp; Gäste</dd>
-              </div>
-              <div>
-                <dt>Europäisch</dt>
-                <dd>Hosting &amp; Support aus der EU</dd>
-              </div>
-            </dl>
-          </div>
-          <div class="hero__preview" aria-hidden="true">
-            <div class="preview-card">
-              <header>
-                <span></span><span></span><span></span>
-                <p>Enti Office Workspace</p>
-              </header>
-              <div class="preview-card__body">
-                <div>
-                  <h3>Aktive Dokumente</h3>
-                  <ul>
-                    <li>EntiWord &ndash; Produktstrategie</li>
-                    <li>EntiPoint &ndash; Quartals-Update</li>
-                    <li>EntiWord &ndash; Vertragsvorlage</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3>Live-Status</h3>
-                  <ul>
-                    <li>Lisa kommentiert &ldquo;Brand Story&rdquo;</li>
-                    <li>Marco präsentiert &ldquo;Roadmap Q3&rdquo;</li>
-                    <li>Elena aktualisiert &ldquo;Preisliste&rdquo;</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="suite" id="suite">
-        <div class="container">
-          <h2>EntiWord und EntiPoint bilden den Kern von Enti Office.</h2>
-          <p class="section-intro">
-            Wir liefern alle Werkzeuge, die Teams täglich brauchen &ndash; von smarten Vorlagen bis zu nahtloser Freigabe.
-          </p>
-          <div class="suite__grid">
-            <article class="suite-card">
-              <div class="suite-card__icon">📝</div>
-              <h3>EntiWord</h3>
-              <p>Moderner Texteditor mit Formatierungen, Vorlagen und Export als HTML oder PDF.</p>
-              <ul>
-                <li>Echtzeit-Kollaboration und Kommentare</li>
-                <li>Stilvorlagen für Headlines &amp; Absätze</li>
-                <li>Automatischer Versionsverlauf</li>
-              </ul>
-            </article>
-            <article class="suite-card">
-              <div class="suite-card__icon">📊</div>
-              <h3>EntiPoint</h3>
-              <p>Visuelle Präsentationen gestalten, Slides organisieren und live präsentieren.</p>
-              <ul>
-                <li>Drag-and-drop Layouts und Farben</li>
-                <li>Moderator:innen-Ansicht mit Notizen</li>
-                <li>Teile Präsentationen als Link oder Embeds</li>
-              </ul>
-            </article>
-            <article class="suite-card">
-              <div class="suite-card__icon">🤝</div>
-              <h3>Gemeinsamer Workspace</h3>
-              <p>Alle Dokumente zentral, geteilt nach Team und Projekt mit Rollenverwaltung.</p>
-              <ul>
-                <li>Aufgaben &amp; Mentions direkt im Inhalt</li>
-                <li>Benachrichtigungen per Mail oder Slack</li>
-                <li>100% DSGVO-konform</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="workspace" id="workspace">
-        <div class="container workspace__inner">
-          <div class="workspace__intro">
-            <h2>Teste EntiWord und EntiPoint sofort im Browser.</h2>
-            <p>
-              Die Demo speichert alles lokal in deinem Browser. Kein Konto notwendig &ndash; einfach ausprobieren und fühlen, wie
-              leicht modernes Arbeiten sein kann.
-            </p>
-            <div class="workspace__switcher" role="tablist" aria-label="Apps in Enti Office">
-              <button class="switcher-button is-active" role="tab" aria-selected="true" data-target="word-app">EntiWord</button>
-              <button class="switcher-button" role="tab" aria-selected="false" data-target="point-app">EntiPoint</button>
-            </div>
-          </div>
-          <div class="workspace__apps">
-            <section class="app app--active" id="word-app" role="tabpanel" aria-label="EntiWord Texteditor">
-              <div class="word-toolbar" role="toolbar" aria-label="EntiWord Werkzeugleiste">
-                <button type="button" data-command="bold" aria-label="Fett">B</button>
-                <button type="button" data-command="italic" aria-label="Kursiv"><em>I</em></button>
-                <button type="button" data-command="underline" aria-label="Unterstreichen"><u>U</u></button>
-                <button type="button" data-command="insertUnorderedList" aria-label="Aufzählung">•</button>
-                <button type="button" data-command="insertOrderedList" aria-label="Nummerierte Liste">1.</button>
-                <button type="button" data-command="justifyLeft" aria-label="Linksbündig">⟸</button>
-                <button type="button" data-command="justifyCenter" aria-label="Zentriert">⟺</button>
-                <button type="button" data-command="justifyRight" aria-label="Rechtsbündig">⟹</button>
-                <label class="word-toolbar__select" aria-label="Schriftgröße">
-                  <span>Größe</span>
-                  <select data-command="fontSize">
-                    <option value="3" selected>Mittel</option>
-                    <option value="2">Klein</option>
-                    <option value="4">Groß</option>
-                    <option value="5">Sehr groß</option>
-                  </select>
-                </label>
-                <label class="word-toolbar__color" aria-label="Textfarbe">
-                  <span>A</span>
-                  <input type="color" data-command="foreColor" value="#1d1b4b" />
-                </label>
-                <label class="word-toolbar__color" aria-label="Hintergrundfarbe">
-                  <span>Bg</span>
-                  <input type="color" data-command="hiliteColor" value="#fdf6b2" />
-                </label>
-                <button type="button" id="word-clear">Neu</button>
-                <button type="button" id="word-export">Download</button>
-              </div>
-              <article id="word-editor" class="word-editor" contenteditable="true">
-                <h1>Willkommen in EntiWord 👋</h1>
-                <p>
-                  EntiWord bietet dir ein fokussiertes Schreibgefühl. Markiere Text und verwende die Werkzeuge oben, um Inhalte zu
-                  gestalten. Alles, was du hier schreibst, bleibt lokal im Browser gespeichert.
-                </p>
-                <p>
-                  Tipp: Du kannst mit <strong>Strg + B</strong> oder <strong>Cmd + B</strong> Text fett formatieren oder mit
-                  <strong>Strg + Z</strong> rückgängig machen.
-                </p>
-              </article>
-            </section>
-
-            <section class="app" id="point-app" role="tabpanel" aria-label="EntiPoint Präsentationseditor" hidden>
-              <div class="point-layout">
-                <aside class="point-slides" aria-label="Folienübersicht">
-                  <header>
-                    <h3>Folien</h3>
-                    <div class="point-slides__actions">
-                      <button type="button" id="point-add-slide">+ Folie</button>
-                      <button type="button" id="point-duplicate-slide" title="Folie duplizieren">Duplizieren</button>
-                      <button type="button" id="point-delete-slide" title="Folie löschen">Löschen</button>
-                    </div>
-                  </header>
-                  <ul id="point-slide-list"></ul>
-                </aside>
-                <div class="point-editor">
-                  <div class="point-editor__fields">
-                    <label>
-                      Titel
-                      <input type="text" id="point-title" placeholder="Titel eingeben" />
-                    </label>
-                    <label>
-                      Stichpunkte (je Zeile eine)
-                      <textarea id="point-bullets" rows="6" placeholder="Neue Idee\nWichtiger KPI\nNächste Schritte"></textarea>
-                    </label>
-                    <label>
-                      Hintergrundfarbe
-                      <input type="color" id="point-background" value="#1d1b4b" />
-                    </label>
-                    <label>
-                      Sprecher:innennotizen
-                      <textarea id="point-notes" rows="4" placeholder="Hinweise für dich während der Präsentation"></textarea>
-                    </label>
-                    <div class="point-editor__actions">
-                      <button type="button" id="point-start">Präsentation starten</button>
-                      <button type="button" id="point-export">Slides exportieren</button>
-                    </div>
-                  </div>
-                  <div class="point-preview" aria-live="polite">
-                    <div class="point-preview__slide" id="point-preview"></div>
-                    <div class="point-preview__notes">
-                      <h4>Notizen</h4>
-                      <p id="point-preview-notes">Keine Notizen vorhanden.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
-
-      <section class="collaboration" id="collaboration">
-        <div class="container collaboration__inner">
-          <div>
-            <h2>Arbeitet gemeinsam &ndash; egal ob im Büro oder remote.</h2>
-            <p>
-              Co-Authoring, Kommentare und Aufgaben funktionieren live in jedem Dokument. Lade Gäste zu bestimmten Projekten ein
-              und behalte per Aktivitätenverlauf den Überblick.
-            </p>
-            <ul class="feature-list">
-              <li><strong>Live-Cursor</strong> zeigen, wer gerade welchen Abschnitt bearbeitet.</li>
-              <li><strong>Rollenbasierte Freigaben</strong> schützen vertrauliche Dokumente.</li>
-              <li><strong>Integrationen</strong> mit Slack, Teams und Zapier verbinden bestehende Workflows.</li>
+            <ul class="hero__facts">
+              <li>Host-Modus wie bei Kahoot &ndash; nur ohne Internetpflicht</li>
+              <li>Quizze werden im Local Storage gespeichert</li>
+              <li>Perfekt f&uuml;r Schul-WLANs, Firmen und Jugendzentren</li>
             </ul>
           </div>
-          <div class="collaboration__panel" aria-hidden="true">
-            <div class="activity-card">
-              <h3>Aktivitäten</h3>
-              <ul>
-                <li>🔁 Marketing Hub geteilt mit Vertrieb</li>
-                <li>💬 3 neue Kommentare in &ldquo;Launch Plan&rdquo;</li>
-                <li>📊 EntiPoint &ldquo;Townhall&rdquo; wurde live gestreamt</li>
-                <li>✅ Vertrag von Legal freigegeben</li>
-              </ul>
-            </div>
-            <div class="activity-card">
-              <h3>Integrationen</h3>
-              <div class="integration-grid">
-                <span>Slack</span><span>Teams</span><span>Drive</span><span>HubSpot</span><span>Notion</span><span>Zapier</span>
-              </div>
-            </div>
+          <div class="card-stack">
+            <article class="card">
+              <h3>Kreative Fragen</h3>
+              <p>Multiple Choice mit vier Antworten, Timer-Hinweisen und Bonuspunkten.</p>
+            </article>
+            <article class="card">
+              <h3>Live-Moderation</h3>
+              <p>Starte Sessions ohne Server. Alles l&auml;uft direkt auf deinem Ger&auml;t.</p>
+            </article>
+            <article class="card">
+              <h3>Cookie-Transparenz</h3>
+              <p>Wir fragen zuerst nach deiner Zustimmung, bevor Local Storage genutzt wird.</p>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="pricing" id="pricing">
+      <section class="section" id="funktionen">
         <div class="container">
-          <h2>Faire Preise für jedes Team.</h2>
-          <div class="pricing__grid">
-            <article class="pricing-card">
-              <h3>Free</h3>
-              <p class="pricing-card__price">0 €</p>
-              <ul>
-                <li>EntiWord &amp; EntiPoint</li>
-                <li>Unbegrenzte Dokumente</li>
-                <li>1 GB Speicher pro Nutzer:in</li>
-              </ul>
-              <button class="button button--ghost" type="button">Kostenlos starten</button>
+          <div class="section__intro">
+            <p class="eyebrow">Warum EntiQuiz?</p>
+            <h2>Designed f&uuml;r schnelles Lernen und faire Wettk&auml;mpfe.</h2>
+            <p>
+              Egal ob Unterricht, Bar-Quiz oder Team-Workshop: EntiQuiz h&auml;lt alles lokal parat und reagiert blitzschnell.
+            </p>
+          </div>
+          <div class="grid grid--3">
+            <article class="feature">
+              <h3>Quiz-Builder</h3>
+              <p>Strukturiere Fragen, bestimme richtige Antworten und sichere jeden Entwurf persistent.</p>
             </article>
-            <article class="pricing-card">
-              <h3>Teams</h3>
-              <p class="pricing-card__price">8 €</p>
-              <ul>
-                <li>Alles aus Free</li>
-                <li>Gemeinsamer Speicher &amp; SSO</li>
-                <li>Admin-Konsole &amp; Support</li>
-              </ul>
-              <button class="button button--primary" type="button">Beta sichern</button>
+            <article class="feature">
+              <h3>Let's Start</h3>
+              <p>Host deinen Bildschirm, zeig Antworten an und vergebe automatisch Punkte f&uuml;r die schnellsten Teams.</p>
             </article>
-            <article class="pricing-card">
-              <h3>Enterprise</h3>
-              <p class="pricing-card__price">Auf Anfrage</p>
-              <ul>
-                <li>Eigene Domain &amp; Hosting</li>
-                <li>Dedizierter Account Manager</li>
-                <li>Erweiterte Compliance</li>
-              </ul>
-              <button class="button button--ghost" type="button">Kontakt aufnehmen</button>
+            <article class="feature">
+              <h3>Team-Sync</h3>
+              <p>Alle Daten bleiben in deinem Browser. Exportiere JSON-Dateien und teile sie per Stick im WLAN.</p>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="support" id="support">
-        <div class="container support__inner">
+      <section class="section">
+        <div class="container CTA">
           <div>
-            <h2>Bereit für Enti Office?</h2>
-            <p>Trage dich in die Beta ein, erhalte Tutorials und sichere dir direkten Support durch das Enti Team.</p>
-            <ul class="feature-list">
-              <li>Früher Zugang zu EntiWord &amp; EntiPoint</li>
-              <li>Exklusive Templates und Webinare</li>
-              <li>Monatliche Produktupdates</li>
-            </ul>
+            <h2>Bereit f&uuml;r die n&auml;chste Quizrunde?</h2>
+            <p>Speichere deine Ideen schon jetzt. Wenn du im Unterricht bist, wartet alles offline auf dich.</p>
           </div>
-          <form class="support-form" id="beta" novalidate>
-            <div class="form-field">
-              <label for="beta-name">Name</label>
-              <input type="text" id="beta-name" name="name" placeholder="Vor- und Nachname" required />
-            </div>
-            <div class="form-field">
-              <label for="beta-email">E-Mail</label>
-              <input type="email" id="beta-email" name="email" placeholder="du@example.com" required />
-            </div>
-            <div class="form-field">
-              <label for="beta-team">Teamgröße</label>
-              <select id="beta-team" name="team">
-                <option value="1-5">1-5 Personen</option>
-                <option value="6-20">6-20 Personen</option>
-                <option value="21-100">21-100 Personen</option>
-                <option value="100+">100+ Personen</option>
-              </select>
-            </div>
-            <div class="form-field">
-              <label for="beta-message">Wo wollt ihr Enti Office einsetzen?</label>
-              <textarea id="beta-message" name="message" rows="4" placeholder="Marketing, Vertrieb, Unternehmensweite Kollaboration..."></textarea>
-            </div>
-            <button class="button button--primary" type="submit">Kostenlosen Zugang anfordern</button>
-            <p class="form-feedback" role="status" aria-live="polite"></p>
-          </form>
+          <div class="hero__actions">
+            <a class="button button--primary" href="/quiz/">Zum Quiz-Builder</a>
+            <a class="button button--ghost" href="/LetsStart/">Let's Start</a>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="container footer__inner">
-        <div>
-          <a class="brand" href="#hero">Enti Office</a>
-          <p>Die europäische Office Suite für Teams, die smart und sicher arbeiten wollen.</p>
-        </div>
-        <div class="footer__links">
-          <div>
-            <h4>Produkte</h4>
-            <ul>
-              <li><a href="#suite">Überblick</a></li>
-              <li><a href="#word-app">EntiWord</a></li>
-              <li><a href="#point-app">EntiPoint</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Unternehmen</h4>
-            <ul>
-              <li><a href="#collaboration">Sicherheit</a></li>
-              <li><a href="#pricing">Preise</a></li>
-              <li><a href="mailto:hello@enti-office.com">Kontakt</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Rechtliches</h4>
-            <ul>
-              <li><a href="#">Impressum</a></li>
-              <li><a href="#">Datenschutz</a></li>
-              <li><a href="#">Nutzungsbedingungen</a></li>
-            </ul>
-          </div>
-        </div>
-        <p class="footer__copy">&copy; <span id="year"></span> Enti Office. Alle Rechte vorbehalten.</p>
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; <span data-year></span> EntiQuiz. Entwickelt f&uuml;r lokale Netzwerke.</p>
       </div>
     </footer>
 
-    <div class="point-presenter" aria-hidden="true" hidden>
-      <div class="point-presenter__stage">
-        <div class="point-presenter__slide"></div>
-        <aside class="point-presenter__notes">
-          <h3>Notizen</h3>
-          <p></p>
-        </aside>
-      </div>
-      <div class="point-presenter__controls">
-        <button type="button" data-action="prev">Zurück</button>
-        <button type="button" data-action="next">Weiter</button>
-        <button type="button" data-action="close">Beenden</button>
+    <div class="cookie-banner" data-cookie-banner>
+      <div class="cookie-banner__inner">
+        <p>
+          EntiQuiz speichert Daten im Local Storage, um deine Quizze zu sichern. Bitte best&auml;tige, dass du damit einverstanden bist.
+        </p>
+        <div class="cookie-banner__actions">
+          <button class="button button--ghost" type="button" data-cookie-decline>Nur technisch notwendige</button>
+          <button class="button button--primary" type="button" data-cookie-accept>Einverstanden</button>
+        </div>
       </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="/main.js" defer></script>
   </body>
 </html>
