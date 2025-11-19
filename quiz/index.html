@@ -104,6 +104,22 @@
             <button class="button button--ghost" type="button" data-export-quizzes>Exportieren (JSON)</button>
           </header>
           <p>Jedes Quiz bleibt im Local Storage gespeichert. Du kannst es laden, l&ouml;schen oder direkt im Let's-Start-Modus nutzen.</p>
+          <div class="panel__toolbar">
+            <label class="field">
+              <span class="field__label">Quiz durchsuchen</span>
+              <input type="search" name="saved-search" placeholder="Titel, Beschreibung oder Frage" data-saved-search />
+            </label>
+            <div class="saved-toolbar__actions" role="group" aria-label="Sortierung">
+              <button class="button button--ghost is-active" type="button" data-saved-sort="date">Neueste zuerst</button>
+              <button class="button button--ghost" type="button" data-saved-sort="title">A-Z</button>
+              <button class="button button--ghost" type="button" data-saved-sort="questions">Meiste Fragen</button>
+            </div>
+            <div class="saved-toolbar__import">
+              <button class="button button--ghost" type="button" data-import-quizzes>Importieren (JSON)</button>
+              <input type="file" accept="application/json" data-import-input hidden />
+            </div>
+          </div>
+          <div class="saved-stats" data-quiz-stats aria-live="polite"></div>
           <ul class="saved-list" data-saved-quizzes></ul>
         </section>
       </div>
@@ -125,6 +141,7 @@
       </div>
     </div>
 
+    <script src="/utils.js" defer></script>
     <script src="/main.js" defer></script>
   </body>
 </html>

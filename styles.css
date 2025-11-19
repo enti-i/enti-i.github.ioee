@@ -276,6 +276,95 @@ textarea {
   flex-wrap: wrap;
 }
 
+.panel__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-top: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  min-width: 200px;
+}
+
+.field--inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.field--inline input {
+  max-width: 80px;
+}
+
+.field__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.saved-toolbar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.saved-toolbar__actions .is-active {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  border-color: transparent;
+}
+
+.saved-toolbar__import {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.saved-stats {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+
+.stat-chip {
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.stat-chip strong {
+  font-size: 1.4rem;
+}
+
+.stat-chip span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
+  font-size: 0.75rem;
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
 .question-list {
   list-style: none;
   padding: 0;
@@ -369,6 +458,56 @@ textarea {
 
 .host__question header {
   margin-bottom: 1rem;
+}
+
+.host__question-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.host__question-tools input {
+  width: 90px;
+}
+
+.scoreboard__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: flex-end;
+  margin-top: 1rem;
+}
+
+.scoreboard__toolbar-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.scoreboard__filter {
+  flex: 1;
+  min-width: 200px;
+}
+
+[data-score-summary] {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+}
+
+.scoreboard__empty {
+  list-style: none;
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+.scoreboard__item--leader {
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px rgba(255, 136, 0, 0.25);
 }
 
 .answer-list {

@@ -54,6 +54,13 @@
               <h2 data-question-text>Bitte w&auml;hle zuerst ein Quiz aus.</h2>
               <p class="muted" data-question-desc></p>
             </header>
+            <div class="host__question-tools">
+              <label class="field field--inline">
+                <span class="field__label">Springe zu</span>
+                <input type="number" min="1" step="1" placeholder="Nr" data-question-jump />
+              </label>
+              <button class="button button--ghost" type="button" data-shuffle-questions>Shuffle deaktiviert</button>
+            </div>
             <ol class="answer-list" data-answer-list></ol>
             <div class="host__controls">
               <button class="button button--ghost" type="button" data-prev disabled>Zur&uuml;ck</button>
@@ -81,6 +88,17 @@
                 </label>
                 <button class="button button--ghost" type="submit">Hinzuf&uuml;gen</button>
               </form>
+              <div class="scoreboard__toolbar">
+                <label class="field scoreboard__filter">
+                  <span class="field__label">Team suchen</span>
+                  <input type="search" placeholder="Name" data-player-search />
+                </label>
+                <div class="scoreboard__toolbar-actions">
+                  <button class="button button--ghost" type="button" data-score-autosort>Auto-Sort aktiv</button>
+                  <button class="button button--ghost" type="button" data-export-scores>Scoreboard exportieren</button>
+                </div>
+              </div>
+              <p class="muted" data-score-summary></p>
               <ul class="scoreboard" data-score-list></ul>
             </section>
 
@@ -134,6 +152,7 @@
       </div>
     </div>
 
+    <script src="/utils.js" defer></script>
     <script src="/main.js" defer></script>
   </body>
 </html>

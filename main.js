@@ -1,3 +1,4 @@
+const U = window.EntiUtils || {};
 const QUIZ_STORAGE_KEY = 'entiquiz.collection';
 const LEGACY_STORAGE_KEYS = ['enti.quiz.collection'];
 const CONSENT_KEY = 'entiquiz.consent';
@@ -133,10 +134,25 @@ function initQuizBuilder() {
   const resetButton = document.querySelector('[data-reset-current]');
   const savedList = document.querySelector('[data-saved-quizzes]');
   const exportButton = document.querySelector('[data-export-quizzes]');
+  const savedStats = document.querySelector('[data-quiz-stats]');
+  const savedSearchInput = document.querySelector('[data-saved-search]');
+  const savedSortButtons = document.querySelectorAll('[data-saved-sort]');
+  const importButton = document.querySelector('[data-import-quizzes]');
+  const importInput = document.querySelector('[data-import-input]');
 
   if (!quizForm || !questionForm || !questionList || !savedList) return;
 
   let currentQuiz = createEmptyQuiz();
+  const savedFilters = { query: '', sort: 'date' };
+  const handleSavedSearch = U.debounce
+    ? U.debounce((value) => {
+        savedFilters.query = value;
+        renderSavedQuizzes();
+      }, 180)
+    : (value) => {
+        savedFilters.query = value;
+        renderSavedQuizzes();
+      };
 
   function renderQuestionList() {
     questionList.innerHTML = '';
@@ -184,10 +200,10 @@ function initQuizBuilder() {
     const target = event.target;
     if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
     if (target.name === 'title') {
-      currentQuiz.title = target.value;
+      currentQuiz.title = U.sanitizeWhitespace ? U.sanitizeWhitespace(target.value) : target.value;
     }
     if (target.name === 'description') {
-      currentQuiz.description = target.value;
+      currentQuiz.description = U.sanitizeWhitespace ? U.sanitizeWhitespace(target.value) : target.value;
     }
     updateSaveState();
   });
@@ -195,10 +211,11 @@ function initQuizBuilder() {
   questionForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(questionForm);
-    const text = (data.get('question') || '').toString().trim();
+    const rawQuestion = (data.get('question') || '').toString();
+    const text = U.sanitizeWhitespace ? U.sanitizeWhitespace(rawQuestion) : rawQuestion.trim();
     const timer = Number(data.get('timer')) || 20;
     const answers = Array.from(questionForm.querySelectorAll('input[name="answer"]')).map((input) =>
-      input.value.trim()
+      U.sanitizeWhitespace ? U.sanitizeWhitespace(input.value) : input.value.trim()
     );
 
     if (!text) {
@@ -280,9 +297,103 @@ function initQuizBuilder() {
     });
   }
 
+  function matchesSavedQuery(quiz) {
+    if (!savedFilters.query) return true;
+    if (U.quizContainsTerm) {
+      return U.quizContainsTerm(quiz, savedFilters.query);
+    }
+    const normalized = savedFilters.query.toLowerCase();
+    const haystack = [quiz.title, quiz.description, ...quiz.questions.map((question) => question.text)]
+      .map((value) => (value || '').toLowerCase())
+      .join(' ');
+    return haystack.includes(normalized);
+  }
+
+  function sortSavedQuizzes(quizzes) {
+    const copy = quizzes.slice();
+    if (savedFilters.sort === 'title') {
+      copy.sort((a, b) =>
+        U.compareStrings ? U.compareStrings(a.title, b.title) : a.title.localeCompare(b.title, 'de-DE')
+      );
+      return copy;
+    }
+    if (savedFilters.sort === 'questions') {
+      copy.sort((a, b) => b.questions.length - a.questions.length);
+      return copy;
+    }
+    copy.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return copy;
+  }
+
+  function applySavedFilters(quizzes) {
+    const filtered = quizzes.filter(matchesSavedQuery);
+    return sortSavedQuizzes(filtered);
+  }
+
+  function renderHighlightedText(element, text, term) {
+    const safeValue = text || '';
+    element.textContent = '';
+    if (!term) {
+      element.textContent = safeValue;
+      return;
+    }
+    const matcher = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\$&'), 'gi');
+    let lastIndex = 0;
+    let match;
+    while ((match = matcher.exec(safeValue)) !== null) {
+      if (match.index > lastIndex) {
+        element.appendChild(document.createTextNode(safeValue.slice(lastIndex, match.index)));
+      }
+      const mark = document.createElement('mark');
+      mark.textContent = safeValue.slice(match.index, matcher.lastIndex);
+      element.appendChild(mark);
+      lastIndex = matcher.lastIndex;
+    }
+    if (lastIndex === 0) {
+      element.textContent = safeValue;
+      return;
+    }
+    if (lastIndex < safeValue.length) {
+      element.appendChild(document.createTextNode(safeValue.slice(lastIndex)));
+    }
+  }
+
+  function createStatChip(value, label) {
+    const chip = document.createElement('div');
+    chip.className = 'stat-chip';
+    const strong = document.createElement('strong');
+    strong.textContent = value;
+    const span = document.createElement('span');
+    span.textContent = label;
+    chip.append(strong, span);
+    return chip;
+  }
+
+  function renderStatsPanel(quizzes) {
+    if (!savedStats) return;
+    savedStats.innerHTML = '';
+    if (!isStorageAllowed()) {
+      savedStats.appendChild(createStatChip('0', 'Speichern deaktiviert'));
+      return;
+    }
+    const summary = U.createQuizSummary ? U.createQuizSummary(quizzes) : { total: quizzes.length };
+    savedStats.appendChild(createStatChip(String(summary.total || 0), 'Gespeicherte Quizze'));
+    if (summary.totalQuestions !== undefined) {
+      savedStats.appendChild(createStatChip(String(summary.totalQuestions), 'Fragen insgesamt'));
+    }
+    if (summary.averageQuestionTimer !== undefined) {
+      savedStats.appendChild(createStatChip(`${summary.averageQuestionTimer || 0}s`, 'Ø Timer'));
+    }
+    if (summary.lastUpdated) {
+      const formatted = U.formatDate ? U.formatDate(summary.lastUpdated) : new Date(summary.lastUpdated).toLocaleDateString('de-DE');
+      savedStats.appendChild(createStatChip(formatted, 'Zuletzt aktualisiert'));
+    }
+  }
+
   function renderSavedQuizzes() {
     savedList.innerHTML = '';
     const quizzes = getStoredQuizzes();
+    renderStatsPanel(quizzes);
 
     if (!isStorageAllowed()) {
       const info = document.createElement('li');
@@ -293,50 +404,140 @@ function initQuizBuilder() {
       return;
     }
 
-    if (!quizzes.length) {
+    const hasQuizzes = quizzes.length > 0;
+    if (exportButton) exportButton.disabled = !hasQuizzes;
+
+    if (!hasQuizzes) {
       const empty = document.createElement('li');
       empty.className = 'muted';
       empty.textContent = 'Noch keine Quizze gespeichert.';
       savedList.appendChild(empty);
-      if (exportButton) exportButton.disabled = true;
       return;
     }
 
-    if (exportButton) exportButton.disabled = false;
+    const filtered = applySavedFilters(quizzes);
+    if (!filtered.length) {
+      const info = document.createElement('li');
+      info.className = 'muted';
+      info.textContent = `Kein Quiz passt zu "${savedFilters.query}".`;
+      savedList.appendChild(info);
+      return;
+    }
 
-    quizzes
-      .slice()
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-      .forEach((quiz) => {
-        const item = document.createElement('li');
-        item.className = 'saved-item';
-        item.dataset.id = quiz.id;
+    filtered.forEach((quiz) => {
+      const item = document.createElement('li');
+      item.className = 'saved-item';
+      item.dataset.id = quiz.id;
 
-        const meta = document.createElement('div');
-        meta.className = 'saved-item__meta';
-        const title = document.createElement('h3');
-        title.textContent = quiz.title;
-        const description = document.createElement('p');
-        description.textContent = `${quiz.questions.length} Fragen · ${new Date(quiz.createdAt).toLocaleDateString('de-DE')}`;
-        meta.append(title, description);
+      const meta = document.createElement('div');
+      meta.className = 'saved-item__meta';
+      const title = document.createElement('h3');
+      renderHighlightedText(title, U.safeText ? U.safeText(quiz.title) : quiz.title, savedFilters.query);
+      const description = document.createElement('p');
+      const created = U.formatDate ? U.formatDate(quiz.createdAt) : new Date(quiz.createdAt).toLocaleDateString('de-DE');
+      description.textContent = `${quiz.questions.length} Fragen · ${created}`;
+      const badge = document.createElement('span');
+      badge.className = 'badge';
+      badge.textContent = U.describeQuizDifficulty ? U.describeQuizDifficulty(quiz) : 'Timer';
+      meta.append(title, description, badge);
 
-        const actions = document.createElement('div');
-        actions.className = 'saved-item__actions';
+      const actions = document.createElement('div');
+      actions.className = 'saved-item__actions';
 
-        const loadButton = document.createElement('button');
-        loadButton.textContent = 'Laden';
-        loadButton.dataset.action = 'load';
-        const playButton = document.createElement('button');
-        playButton.textContent = "Let's Start";
-        playButton.dataset.action = 'play';
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'L&ouml;schen';
-        deleteButton.dataset.action = 'delete';
+      const loadButton = document.createElement('button');
+      loadButton.textContent = 'Laden';
+      loadButton.dataset.action = 'load';
+      const playButton = document.createElement('button');
+      playButton.textContent = "Let's Start";
+      playButton.dataset.action = 'play';
+      const duplicateButton = document.createElement('button');
+      duplicateButton.textContent = 'Duplizieren';
+      duplicateButton.dataset.action = 'duplicate';
+      const shareButton = document.createElement('button');
+      shareButton.textContent = 'Kopieren';
+      shareButton.dataset.action = 'share';
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'L&ouml;schen';
+      deleteButton.dataset.action = 'delete';
 
-        actions.append(loadButton, playButton, deleteButton);
-        item.append(meta, actions);
-        savedList.appendChild(item);
-      });
+      actions.append(loadButton, playButton, duplicateButton, shareButton, deleteButton);
+      item.append(meta, actions);
+      savedList.appendChild(item);
+    });
+  }
+
+  function updateSortButtons() {
+    savedSortButtons.forEach((button) => {
+      const key = button.dataset.savedSort || 'date';
+      button.classList.toggle('is-active', key === savedFilters.sort);
+    });
+  }
+
+  function duplicateQuiz(quiz) {
+    const clone = JSON.parse(JSON.stringify(quiz));
+    clone.id = createId();
+    clone.createdAt = new Date().toISOString();
+    clone.title = `${quiz.title} (Kopie)`;
+    const quizzes = getStoredQuizzes();
+    quizzes.push(clone);
+    saveQuizzes(quizzes);
+    renderSavedQuizzes();
+  }
+
+  function shareQuiz(quiz) {
+    const payload = JSON.stringify(quiz, null, 2);
+    const copier = U.copyToClipboard ? U.copyToClipboard(payload) : Promise.resolve();
+    copier
+      .then(() => alert(`Quiz "${quiz.title}" wurde in die Zwischenablage kopiert.`))
+      .catch(() => alert('Konnte das Quiz nicht kopieren.'));
+  }
+
+  function mergeQuizCollections(existing, incoming) {
+    const map = new Map(existing.map((quiz) => [quiz.id, quiz]));
+    incoming.forEach((quiz) => {
+      const normalized = U.normalizeQuiz ? U.normalizeQuiz(quiz) : quiz;
+      const id = normalized.id || createId();
+      map.set(id, { ...normalized, id });
+    });
+    return Array.from(map.values());
+  }
+
+  function handleImportPayload(payload) {
+    const incoming = Array.isArray(payload) ? payload : [payload];
+    const valid = incoming.filter((quiz) => (U.isValidQuiz ? U.isValidQuiz(quiz) : quiz?.questions?.length));
+    if (!valid.length) {
+      alert('Keine g&uuml;ltigen Quizze in der Datei gefunden.');
+      return;
+    }
+    const merged = mergeQuizCollections(getStoredQuizzes(), valid);
+    saveQuizzes(merged);
+    renderSavedQuizzes();
+    alert(`${valid.length} Quizze importiert.`);
+  }
+
+  function importQuizzesFromFile(file) {
+    if (!file) return;
+    if (!isStorageAllowed()) {
+      alert('Bitte erlaube Local Storage, bevor du Quizze importierst.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const text = reader.result?.toString() || '';
+      const parsed = U.parseJSON ? U.parseJSON(text, null) : (() => {
+          try {
+            return JSON.parse(text);
+          } catch (error) {
+            return null;
+          }
+        })();
+      if (!parsed) {
+        alert('Datei konnte nicht gelesen werden.');
+        return;
+      }
+      handleImportPayload(parsed);
+    };
+    reader.readAsText(file);
   }
 
   savedList.addEventListener('click', (event) => {
@@ -369,6 +570,14 @@ function initQuizBuilder() {
         renderSavedQuizzes();
       }
     }
+
+    if (action === 'duplicate' && selected) {
+      duplicateQuiz(selected);
+    }
+
+    if (action === 'share' && selected) {
+      shareQuiz(selected);
+    }
   });
 
   if (exportButton) {
@@ -387,9 +596,35 @@ function initQuizBuilder() {
     });
   }
 
+  if (savedSearchInput) {
+    savedSearchInput.addEventListener('input', (event) => {
+      handleSavedSearch(event.target.value);
+    });
+  }
+
+  savedSortButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      savedFilters.sort = button.dataset.savedSort || 'date';
+      updateSortButtons();
+      renderSavedQuizzes();
+    });
+  });
+
+  if (importButton && importInput) {
+    importButton.addEventListener('click', () => importInput.click());
+    importInput.addEventListener('change', (event) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        importQuizzesFromFile(file);
+      }
+      importInput.value = '';
+    });
+  }
+
   document.addEventListener('consentchange', renderSavedQuizzes);
 
   renderQuestionList();
+  updateSortButtons();
   renderSavedQuizzes();
   updateSaveState();
 }
@@ -410,6 +645,12 @@ function initHost() {
   const playerForm = document.querySelector('[data-player-form]');
   const scoreList = document.querySelector('[data-score-list]');
   const revealButton = document.querySelector('[data-reveal-answer]');
+  const questionJumpInput = document.querySelector('[data-question-jump]');
+  const shuffleButton = document.querySelector('[data-shuffle-questions]');
+  const playerSearchInput = document.querySelector('[data-player-search]');
+  const scoreSummary = document.querySelector('[data-score-summary]');
+  const autoSortButton = document.querySelector('[data-score-autosort]');
+  const exportScoresButton = document.querySelector('[data-export-scores]');
   const podiumForm = document.querySelector('[data-podium-form]');
   const podiumHistory = document.querySelector('[data-round-history]');
   const podiumSelects = podiumForm ? Array.from(podiumForm.querySelectorAll('[data-podium-select]')) : [];
@@ -432,7 +673,21 @@ function initHost() {
     players: [],
     showAnswers: false,
     roundHistory: [],
+    questionOrder: [],
+    shuffleQuestions: false,
+    autoSortScores: true,
+    playerSearch: '',
   };
+
+  const handlePlayerSearch = U.debounce
+    ? U.debounce((value) => {
+        hostState.playerSearch = value;
+        renderPlayers();
+      }, 150)
+    : (value) => {
+        hostState.playerSearch = value;
+        renderPlayers();
+      };
 
   function populateSelect() {
     if (!isStorageAllowed()) {
@@ -472,6 +727,12 @@ function initHost() {
     hostState.timerId = null;
   }
 
+  function updateTimerLabel(value) {
+    if (!timerDisplay) return;
+    const label = U.formatSeconds ? U.formatSeconds(value) : `${value}s`;
+    timerDisplay.textContent = label;
+  }
+
   function updateRevealState() {
     if (revealButton) {
       revealButton.disabled = !hostState.quiz;
@@ -479,7 +740,7 @@ function initHost() {
     }
 
     if (!answerList) return;
-    const question = hostState.quiz?.questions?.[hostState.index];
+    const question = hostState.quiz?.questions?.[getActiveQuestionIndex()];
     const items = answerList.querySelectorAll('li');
     items.forEach((item, index) => {
       const isCorrect = Boolean(question && index === question.correctIndex);
@@ -494,6 +755,46 @@ function initHost() {
     updateRevealState();
   }
 
+  function getActiveQuestionIndex(index = hostState.index) {
+    if (!hostState.questionOrder.length) {
+      return index;
+    }
+    return hostState.questionOrder[index] ?? index;
+  }
+
+  function createQuestionOrder(total) {
+    if (!hostState.shuffleQuestions) return [];
+    const order = Array.from({ length: total }, (_, index) => index);
+    for (let i = order.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    return order;
+  }
+
+  function updateShuffleButton() {
+    if (!shuffleButton) return;
+    shuffleButton.textContent = hostState.shuffleQuestions ? 'Shuffle aktiv' : 'Shuffle deaktiviert';
+    shuffleButton.classList.toggle('is-active', hostState.shuffleQuestions);
+  }
+
+  function syncQuestionJumpInput() {
+    if (!questionJumpInput) return;
+    if (!hostState.quiz) {
+      questionJumpInput.value = '';
+      questionJumpInput.setAttribute('disabled', 'true');
+      return;
+    }
+    questionJumpInput.removeAttribute('disabled');
+    questionJumpInput.value = String(hostState.index + 1);
+    questionJumpInput.setAttribute('max', String(hostState.quiz.questions.length));
+  }
+
+  function updateAutoSortButton() {
+    if (!autoSortButton) return;
+    autoSortButton.textContent = hostState.autoSortScores ? 'Auto-Sort aktiv' : 'Auto-Sort aus';
+  }
+
   function renderQuestion() {
     if (!hostState.quiz) {
       questionText.textContent = 'Bitte w&auml;hle zuerst ein Quiz aus.';
@@ -505,17 +806,23 @@ function initHost() {
       nextButton?.setAttribute('disabled', 'true');
       timerStart?.setAttribute('disabled', 'true');
       timerReset?.setAttribute('disabled', 'true');
+      questionJumpInput?.setAttribute('disabled', 'true');
       resetReveal();
       return;
     }
 
     const { questions, title } = hostState.quiz;
     const total = questions.length;
-    const currentQuestion = questions[hostState.index];
+    const activeIndex = getActiveQuestionIndex();
+    const currentQuestion = questions[activeIndex];
     if (!currentQuestion) return;
 
     questionText.textContent = currentQuestion.text;
-    questionDesc.textContent = `${title} · Timer-Limit: ${currentQuestion.timer}s`;
+    const detailParts = [title, U.formatTimerLabel ? U.formatTimerLabel(currentQuestion.timer) : `Timer: ${currentQuestion.timer}s`];
+    if (hostState.shuffleQuestions) {
+      detailParts.push(`Original #${activeIndex + 1}`);
+    }
+    questionDesc.textContent = detailParts.join(' · ');
     indexEl.textContent = String(hostState.index + 1);
     totalEl.textContent = String(total);
 
@@ -535,9 +842,10 @@ function initHost() {
 
     timerStart?.removeAttribute('disabled');
     timerReset?.removeAttribute('disabled');
+    syncQuestionJumpInput();
     clearTimer();
     hostState.remaining = currentQuestion.timer;
-    timerDisplay.textContent = `${hostState.remaining}s`;
+    updateTimerLabel(hostState.remaining);
     resetReveal();
     updateRevealState();
   }
@@ -558,6 +866,7 @@ function initHost() {
     hostState.quiz = selected;
     hostState.index = 0;
     hostState.roundHistory = [];
+    hostState.questionOrder = createQuestionOrder(selected.questions.length);
     resetPodiumForm();
     renderQuestion();
     renderRoundHistory();
@@ -572,64 +881,140 @@ function initHost() {
         hostState.remaining = 0;
         clearTimer();
       }
-      timerDisplay.textContent = `${hostState.remaining}s`;
+      updateTimerLabel(hostState.remaining);
     }, 1000);
   }
 
   function resetTimer() {
     clearTimer();
     if (!hostState.quiz) return;
-    const question = hostState.quiz.questions[hostState.index];
+    const question = hostState.quiz.questions[getActiveQuestionIndex()];
     hostState.remaining = question.timer;
-    timerDisplay.textContent = `${hostState.remaining}s`;
+    updateTimerLabel(hostState.remaining);
+  }
+
+  function renderPlayerName(element, text, term) {
+    const safeValue = text || '';
+    element.textContent = '';
+    if (!term) {
+      element.textContent = safeValue;
+      return;
+    }
+    const matcher = new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\$&'), 'gi');
+    let lastIndex = 0;
+    let match;
+    while ((match = matcher.exec(safeValue)) !== null) {
+      if (match.index > lastIndex) {
+        element.appendChild(document.createTextNode(safeValue.slice(lastIndex, match.index)));
+      }
+      const mark = document.createElement('mark');
+      mark.textContent = safeValue.slice(match.index, matcher.lastIndex);
+      element.appendChild(mark);
+      lastIndex = matcher.lastIndex;
+    }
+    if (lastIndex === 0) {
+      element.textContent = safeValue;
+      return;
+    }
+    if (lastIndex < safeValue.length) {
+      element.appendChild(document.createTextNode(safeValue.slice(lastIndex)));
+    }
+  }
+
+  function getPlayersForDisplay() {
+    let players = hostState.players.slice();
+    if (hostState.autoSortScores) {
+      players.sort((a, b) => b.score - a.score);
+    }
+    if (hostState.playerSearch) {
+      const normalized = U.removeDiacritics
+        ? U.removeDiacritics(hostState.playerSearch.toLowerCase())
+        : hostState.playerSearch.toLowerCase();
+      players = players.filter((player) => {
+        const value = U.removeDiacritics ? U.removeDiacritics(player.name.toLowerCase()) : player.name.toLowerCase();
+        return value.includes(normalized);
+      });
+    }
+    return players;
+  }
+
+  function updateScoreSummary(allPlayers, visiblePlayers) {
+    if (!scoreSummary) return;
+    if (!allPlayers.length) {
+      scoreSummary.textContent = 'Noch keine Teams eingetragen.';
+      return;
+    }
+    const totalPoints = allPlayers.reduce((sum, player) => sum + (player.score || 0), 0);
+    const topScore = Math.max(...allPlayers.map((player) => player.score || 0));
+    const label = visiblePlayers.length === allPlayers.length
+      ? `${allPlayers.length} Teams`
+      : `${visiblePlayers.length}/${allPlayers.length} Teams`;
+    scoreSummary.textContent = `${label} · Gesamtpunkte ${totalPoints} · Highscore ${topScore}`;
   }
 
   function renderPlayers() {
     if (!scoreList) return;
     scoreList.innerHTML = '';
+    const visiblePlayers = getPlayersForDisplay();
     if (!hostState.players.length) {
       const info = document.createElement('li');
-      info.className = 'muted';
+      info.className = 'scoreboard__empty';
       info.textContent = 'Noch keine Spieler:innen.';
       scoreList.appendChild(info);
+      updateScoreSummary(hostState.players, visiblePlayers);
       populatePodiumSelects();
       return;
     }
 
-    hostState.players
-      .slice()
-      .sort((a, b) => b.score - a.score)
-      .forEach((player) => {
-        const item = document.createElement('li');
-        const meta = document.createElement('div');
-        const name = document.createElement('p');
-        name.className = 'scoreboard__name';
+    if (!visiblePlayers.length) {
+      const info = document.createElement('li');
+      info.className = 'scoreboard__empty';
+      info.textContent = `Keine Treffer f&uuml;r "${hostState.playerSearch}".`;
+      scoreList.appendChild(info);
+      updateScoreSummary(hostState.players, visiblePlayers);
+      populatePodiumSelects();
+      return;
+    }
+
+    visiblePlayers.forEach((player, index) => {
+      const item = document.createElement('li');
+      if (hostState.autoSortScores && index === 0 && !hostState.playerSearch) {
+        item.classList.add('scoreboard__item--leader');
+      }
+      const meta = document.createElement('div');
+      const name = document.createElement('p');
+      name.className = 'scoreboard__name';
+      if (hostState.playerSearch) {
+        renderPlayerName(name, player.name, hostState.playerSearch);
+      } else {
         name.textContent = player.name;
-        const score = document.createElement('small');
-        score.className = 'muted';
-        score.textContent = `${player.score} Punkte`;
-        meta.append(name, score);
+      }
+      const score = document.createElement('small');
+      score.className = 'muted';
+      score.textContent = `${player.score} Punkte`;
+      meta.append(name, score);
 
-        const actions = document.createElement('div');
-        actions.className = 'scoreboard__actions';
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.placeholder = '+100';
-        input.value = '50';
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = '+';
-        button.dataset.id = player.id;
-        button.addEventListener('click', () => {
-          const delta = Number(input.value) || 0;
-          player.score += delta;
-          renderPlayers();
-        });
-        actions.append(input, button);
-        item.append(meta, actions);
-        scoreList.appendChild(item);
+      const actions = document.createElement('div');
+      actions.className = 'scoreboard__actions';
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.placeholder = '+100';
+      input.value = '50';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = '+';
+      button.dataset.id = player.id;
+      button.addEventListener('click', () => {
+        const delta = Number(input.value) || 0;
+        player.score += delta;
+        renderPlayers();
       });
+      actions.append(input, button);
+      item.append(meta, actions);
+      scoreList.appendChild(item);
+    });
 
+    updateScoreSummary(hostState.players, visiblePlayers);
     populatePodiumSelects();
   }
 
@@ -666,11 +1051,6 @@ function initHost() {
     populatePodiumSelects();
   }
 
-  function truncate(text, limit = 80) {
-    if (text.length <= limit) return text;
-    return `${text.slice(0, limit)}…`;
-  }
-
   function renderRoundHistory() {
     if (!podiumHistory) return;
     podiumHistory.innerHTML = '';
@@ -697,10 +1077,15 @@ function initHost() {
   }
 
   function recordRound(winners) {
-    const question = hostState.quiz?.questions?.[hostState.index];
-    const questionLabel = question ? `Frage ${hostState.index + 1}` : 'Freie Punkte';
-    const questionSnippet = question ? truncate(question.text) : 'Manuelle Punktevergabe';
-    hostState.roundHistory.unshift({ questionLabel, questionSnippet, winners });
+    const question = hostState.quiz?.questions?.[getActiveQuestionIndex()];
+    const label = question ? `Frage ${hostState.index + 1}` : 'Freie Punkte';
+    const snippet = question
+      ? U.truncateText
+        ? U.truncateText(question.text, 80)
+        : `${question.text.slice(0, 80)}…`
+      : 'Manuelle Punktevergabe';
+    const entry = U.buildHistoryEntry ? U.buildHistoryEntry(label, snippet, winners) : { questionLabel: label, questionSnippet: snippet, winners };
+    hostState.roundHistory.unshift(entry);
     if (hostState.roundHistory.length > MAX_HISTORY) {
       hostState.roundHistory.pop();
     }
@@ -747,13 +1132,44 @@ function initHost() {
     resetPodiumForm();
   }
 
+  function clampQuestionTarget(value) {
+    const total = hostState.quiz?.questions.length || 1;
+    const numeric = Number(value) || 1;
+    return Math.min(total, Math.max(1, numeric));
+  }
+
+  function exportScores() {
+    if (!hostState.players.length) {
+      alert('Keine Spieler:innen zum Exportieren.');
+      return;
+    }
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      quizId: hostState.quiz?.id || null,
+      quizTitle: hostState.quiz?.title || '',
+      players: hostState.players,
+    };
+    const blob = U.exportScoresBlob
+      ? U.exportScoresBlob(payload)
+      : new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `entiquiz-scoreboard-${Date.now()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
   if (playerForm) {
     playerForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const data = new FormData(playerForm);
-      const name = (data.get('player') || '').toString().trim();
+      const rawName = (data.get('player') || '').toString();
+      const name = U.normalizePlayerName ? U.normalizePlayerName(rawName) : rawName.trim();
       if (!name) return;
-      hostState.players.push({ id: createId(), name, score: 0 });
+      hostState.players.push(U.createScoreEntry ? U.createScoreEntry(name, 0) : { id: createId(), name, score: 0 });
       playerForm.reset();
       renderPlayers();
     });
@@ -795,6 +1211,30 @@ function initHost() {
     event.preventDefault();
     resetPodiumForm();
   });
+  questionJumpInput?.addEventListener('change', (event) => {
+    if (!hostState.quiz) return;
+    const target = clampQuestionTarget(event.target.value);
+    hostState.index = target - 1;
+    renderQuestion();
+  });
+  shuffleButton?.addEventListener('click', () => {
+    hostState.shuffleQuestions = !hostState.shuffleQuestions;
+    updateShuffleButton();
+    if (hostState.quiz) {
+      hostState.questionOrder = createQuestionOrder(hostState.quiz.questions.length);
+      hostState.index = 0;
+      renderQuestion();
+    }
+  });
+  playerSearchInput?.addEventListener('input', (event) => {
+    handlePlayerSearch(event.target.value);
+  });
+  autoSortButton?.addEventListener('click', () => {
+    hostState.autoSortScores = !hostState.autoSortScores;
+    updateAutoSortButton();
+    renderPlayers();
+  });
+  exportScoresButton?.addEventListener('click', exportScores);
 
   document.addEventListener('consentchange', populateSelect);
 
@@ -804,6 +1244,9 @@ function initHost() {
   renderPlayers();
   renderRoundHistory();
   updateRevealState();
+  updateShuffleButton();
+  updateAutoSortButton();
+  updateScoreSummary([], []);
 }
 
 function init() {
